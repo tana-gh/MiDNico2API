@@ -103,7 +103,7 @@ namespace MiDNicoAPI.Core
 
                     if (waiting)
                     {
-                        Task.Delay(1);
+                        await Task.Delay(1);
                         continue;
                     }
 
