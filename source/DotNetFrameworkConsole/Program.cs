@@ -14,8 +14,10 @@
         static string pass = "___";
         #endregion
 
-        static int _liveId = 314309375;
+        static int _liveId = 314335528;
         static Dictionary<string, string> _kotehan = new Dictionary<string, string>();
+        static string _github = "https://github.com/Midoliy/MiDNico2API";
+
 
         static void Main(string[] args)
         {
@@ -109,7 +111,7 @@
             Nico2API.PostComment(session,        // [必須]       セッション情報
                                  postkey,        // [必須]       コメント投稿用キー値
                                  user,           // [必須]       ユーザ情報
-                                 "TEST COMMENT", // [必須]       投稿するコメント内容
+                                 _github,        // [必須]       投稿するコメント内容
                                  startdate,      // [必須]       生放送の開始時刻
                                  "red",          // [オプション] 文字色
                                  "small",        // [オプション] 文字サイズ
@@ -123,7 +125,7 @@
             // ======================================================================================================================================
             Nico2API.PostCommentAsAdmin(session,          // [必須]       セッション情報
                                         _liveId,          // [必須]       生放送ID
-                                        "TEST COMMENT",   // [必須]       投稿するコメント内容
+                                        _github,          // [必須]       投稿するコメント内容
                                         true,             // [オプション] 表示を生主コメント欄に固定するかどうか(default:false)
                                         "blue2",          // [オプション] 文字色(default:white)
                                         "管理人"          // [オプション] コメントに付与するニックネーム(default:"")

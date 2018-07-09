@@ -57,7 +57,7 @@ namespace MiDNicoAPI
         /// </summary>
         /// <param name="cookie">ニコニコのCookie情報を指定.</param>
         /// <param name="thread">番組</param>
-        /// <returns></returns>
+        /// <returns>コメント投稿用のキー値</returns>
         public static (string key, ThreadInfo thread) GetPostKey(
             in CookieContainer cookie,
             in ThreadInfo thread
@@ -74,10 +74,10 @@ namespace MiDNicoAPI
         /// <param name="ipEndPoint"></param>
         /// <param name="cookie">ニコニコのCookie情報を指定.</param>
         /// <param name="nico2Thread">Thread番号</param>
-        /// <param name="bufSize"></param>
-        /// <param name="historyFrom"></param>
-        /// <param name="observer"></param>
-        /// <returns></returns>
+        /// <param name="bufSize">コメントサーバから一度に受信するバイトサイズ</param>
+        /// <param name="historyFrom">何件過去に遡ってコメントを取得するかの設定件数</param>
+        /// <param name="observer">コメントを受信した際の</param>
+        /// <returns>ニコニコのコメント関連APIと通信するインスタンス</returns>
         public static async Task<Nico2Comment> ConsumeComment (
             (IPEndPoint ipEndPoint, CookieContainer cookie, int nico2Thread) session,
             Action<LiveComment> observer    = null,
@@ -93,7 +93,7 @@ namespace MiDNicoAPI
             }
 
             /// <summary>
-            ///  コメントを受信した際のルーチン
+            ///  コメントを受信した際のコルーチン
             /// </summary>
             /// <param name="data">受信したデータ</param>
             /// <param name="prev">前回の受信データのキャッシュ</param>
@@ -145,7 +145,7 @@ namespace MiDNicoAPI
         /// (非公式API: stopComment)
         /// 生放送番組とのセッション情報からコメントを取得するを停止するAPI.
         /// </summary>
-        /// <param name="ipEndPoint"></param>
+        /// <param name="ipEndPoint">ニコニコのIPEndPoint</param>
         public static void StopComment (
             in IPEndPoint ipEndPoint
         )
@@ -160,8 +160,8 @@ namespace MiDNicoAPI
         /// (非公式API: getThreadInfo)
         /// 生放送番組とのセッション情報からスレッド概要を取得するAPI.
         /// </summary>
-        /// <param name="session"></param>
-        /// <returns></returns>
+        /// <param name="session">ニコニコとのセッション情報</param>
+        /// <returns>ニコニコ生放送番組のスレッド概要情報</returns>
         public static ThreadInfo GetThreadInfo (
             in (IPEndPoint ipEndPoint, CookieContainer cookie, int nico2Thread) session
         )
@@ -179,12 +179,12 @@ namespace MiDNicoAPI
         /// (非公式API: postComment)
         /// 生放送番組に対してコメントを投稿するAPI.
         /// </summary>
-        /// <param name="session"></param>
-        /// <param name="postkey"></param>
-        /// <param name="userInfo"></param>
-        /// <param name="message"></param>
+        /// <param name="session">ニコニコとのセッション情報</param>
+        /// <param name="postkey">コメント投稿用のキー値</param>
+        /// <param name="userInfo">コメントを投稿するユーザ情報</param>
+        /// <param name="message">投稿するコメント</param>
         /// <param name="startdate">生放送開始時刻</param>
-        /// <param name="commands"></param>
+        /// <param name="commands">コメント用オプションコマンド</param>
         public static void PostComment (
             in (IPEndPoint  ipEndPoint, CookieContainer cookie, int nico2Thread) session,
             in (string      key       , ThreadInfo      thread   ) postkey ,
@@ -209,12 +209,12 @@ namespace MiDNicoAPI
         /// (非公式API: postCommentAsAdmin)
         /// 生放送番組に対して放送主権限でコメントを投稿するAPI.
         /// </summary>
-        /// <param name="session"></param>
-        /// <param name="nico2liveId"></param>
-        /// <param name="message"></param>
-        /// <param name="isPermanent"></param>
-        /// <param name="color"></param>
-        /// <param name="nickname"></param>
+        /// <param name="session">ニコニコとのセッション情報</param>
+        /// <param name="nico2liveId">コメント投稿する生放送番組ID(lvから始まるID)</param>
+        /// <param name="message">投稿するコメント</param>
+        /// <param name="isPermanent">投稿したコメントを生主コメント欄に固定する場合, true を指定</param>
+        /// <param name="color">コメントの色を指定</param>
+        /// <param name="nickname">コメント投稿時のニックネーム</param>
         public static void PostCommentAsAdmin (
             in (IPEndPoint ipEndPoint, CookieContainer cookie, int nico2Thread) session,
             in int    nico2liveId,
@@ -232,8 +232,8 @@ namespace MiDNicoAPI
         /// (非公式API: deletePermComment)
         /// permコメントを削除するAPI.
         /// </summary>
-        /// <param name="session"></param>
-        /// <param name="nico2liveId"></param>
+        /// <param name="session">ニコニコとのセッション情報</param>
+        /// <param name="nico2liveId">コメント投稿する生放送番組ID(lvから始まるID)</param>
         public static void DeletePermComment (
             in (IPEndPoint ipEndPoint, CookieContainer cookie, int nico2Thread) session,
             in int nico2liveId
@@ -247,8 +247,8 @@ namespace MiDNicoAPI
         /// (API: getuserinfo)
         /// 指定したユーザＩＤからユーザ情報を取得する.
         /// </summary>
-        /// <param name="userId"></param>
-        /// <returns></returns>
+        /// <param name="userId">ニコニコユーザID</param>
+        /// <returns>ニコニコユーザ情報</returns>
         public static UserInfo GetUserInfo (
             in string userId
         )
